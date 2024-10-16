@@ -11,13 +11,7 @@ pipeline {
                     git credentialsId: 'abcjenkins', url: 'https://github.com/szuler/abcd-student', branch: 'main'
                 }
             }
-        }
-        stage('Example') {
-            steps {
-                echo 'Hello!'
-                sh 'ls -la'
-            }
-        }
+        }       
         stage('[ZAP] Baseline passive-scan') {
             steps {
                 sh 'mkdir -p results/'
@@ -44,14 +38,12 @@ pipeline {
                         docker stop zap juice-shop
                         docker rm zap
                     '''
+                    defectDojoPublisher(artifact: '${WORKSPACE}/results/zap_html_report.html', 
+                    productName: 'Juice Shop', 
+                    scanType: 'Zap passive Scan', 
+                    engagementName: 'szymon.urbanski@gmail.com')
                 }
             }
-        }
-        stage('After zap') {
-            steps {
-                echo 'Good bye!'
-                sh 'ls -la'
-            }
-        }
+        }        
     }    
 }
