@@ -49,15 +49,16 @@ pipeline {
         steps {
             sh 'mkdir -p results/'
             sh 'osv-scanner scan --lockfile package-lock.json --format json --output results/sca-osv-scanner.json'
+            sh 'cat ${WORKSPACE}/results/sca-osv-scanner.json'
         }
-        post {
-            always {                   
-                defectDojoPublisher(artifact: '${WORKSPACE}/results/sca-osv-scanner.json', 
-                productName: 'Juice Shop', 
-                scanType: 'OSV Scan', 
-                engagementName: 'szymon.urbanski@gmail.com')
-            }
-        }
+        // post {
+        //     always {                   
+        //         defectDojoPublisher(artifact: '${WORKSPACE}/results/sca-osv-scanner.json', 
+        //         productName: 'Juice Shop', 
+        //         scanType: 'OSV Scan', 
+        //         engagementName: 'szymon.urbanski@gmail.com')
+        //     }
+        // }
     }        
     }    
 }
