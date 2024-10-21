@@ -48,9 +48,9 @@ pipeline {
         stage('SCA scan') {
         steps {
             sh 'mkdir -p results/'            
-            sh 'osv-scanner scan --lockfile package-lock.json --format json --output results/sca-osv-scanner.json'            
+            sh 'osv-scanner scan --lockfile package-lock.json --format json --output ${WORKSPACE}/results/sca-osv-scanner.json'            
             sh 'osv-scanner scan --lockfile package-lock.json --format table' 
-            cat results/sca-osv-scanner.json
+            cat ${WORKSPACE}/results/sca-osv-scanner.json
         }
         // post {
         //     always {                   
