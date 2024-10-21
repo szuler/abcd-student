@@ -61,6 +61,14 @@ pipeline {
         //         engagementName: 'szymon.urbanski@gmail.com')
         //     }
         // }
-    }        
+    }  
+    post {
+            always {                   
+                defectDojoPublisher(artifact: '${WORKSPACE}/results/sca-osv-scanner.json', 
+                productName: 'Juice Shop', 
+                scanType: 'OSV Scan', 
+                engagementName: 'szymon.urbanski@gmail.com')
+            }
+        }      
     }    
 }
