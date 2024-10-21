@@ -56,8 +56,7 @@ pipeline {
                             )
                         echo 'OsvScan value = ${OSV_SCAN_VALUE}'
                     } catch (Exception e) {
-                        echo 'Exception occurred: ' + e.toString()
-                        sh 'Handle the exception!'
+                        echo 'Exception occurred: ' + e.toString()                        
                     }
             }
             sh 'osv-scanner scan --lockfile package-lock.json --format table'            
