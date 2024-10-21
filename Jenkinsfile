@@ -48,7 +48,7 @@ pipeline {
         stage('SCA scan') {
         steps {
             sh 'mkdir -p results/'            
-            sh 'OSV_SCAN_VALUE = (osv-scanner scan --lockfile package-lock.json --format json --output results/sca-osv-scanner.json)'
+            OSV_SCAN_VALUE = (osv-scanner scan --lockfile package-lock.json --format json --output results/sca-osv-scanner.json)
             echo 'OsvScan value = ${OSV_SCAN_VALUE}'
             sh 'osv-scanner scan --lockfile package-lock.json --format table'            
             cat "${WORKSPACE}/results/sca-osv-scanner.json"
