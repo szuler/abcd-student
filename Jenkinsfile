@@ -48,13 +48,9 @@ pipeline {
         stage('SCA scan') {
         steps {
             sh 'mkdir -p results/'            
-            sh '$osvScan = osv-scanner scan --lockfile package-lock.json --format json --output ${WORKSPACE}/results/sca-osv-scanner.json'            
-            sh 'osv-scanner scan --lockfile package-lock.json --format table' 
-            sh 'case $? in \
-                    1) echo found issue ;; \
-                    127) echo error ;; \
-                    0) echo Success ;; \
-                esac'
+            sh 'OSV_SCAN_VALUE = (osv-scanner scan --lockfile package-lock.json --format json --output results/sca-osv-scanner.json)'
+            echo 'OsvScan value = ${OSV_SCAN_VALUE}'
+            sh 'osv-scanner scan --lockfile package-lock.json --format table'            
             cat "${WORKSPACE}/results/sca-osv-scanner.json"
         }
         // post {
