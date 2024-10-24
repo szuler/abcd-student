@@ -17,14 +17,14 @@ pipeline {
                 sh 'mkdir -p results/'                
                 sh' trufflehog git file://. --only-verified --json > ${WORKSPACE}/results/trufflehog_result.json'
             }
-            // post {
-            //     always {                   
-            //         defectDojoPublisher(artifact: '${WORKSPACE}/results/trufflehog_result.json', 
-            //         productName: 'Juice Shop', 
-            //         scanType: 'Trufflehog Scan', 
-            //         engagementName: 'szymon.urbanski@gmail.com')
-            //     }
-            // }
+            post {
+                always {                   
+                    defectDojoPublisher(artifact: '${WORKSPACE}/results/trufflehog_result.json', 
+                    productName: 'Juice Shop', 
+                    scanType: 'Trufflehog Scan', 
+                    engagementName: 'szymon.urbanski@gmail.com')
+                }
+            }
         }
         // stage('[ZAP] Baseline passive-scan') {
         //     steps {
