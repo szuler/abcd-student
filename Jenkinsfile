@@ -15,21 +15,16 @@ pipeline {
         stage('[TruffleHog] Filesystem scan') {
             steps {
                 sh 'mkdir -p results/'                
-                sh 'trufflehog git file://. --only-verified --json > ${WORKSPACE}/results/trufflehog_result.json'
-                sh 'mkdir -p mirror/'
-            
-                sh 'git clone --mirror . ./mirror'
-                sh 'trufflehog git file://.mirror --only-verified'// --json > ${WORKSPACE}/results/trufflehog_result.json'
-                
+                sh 'trufflehog git file://. --only-verified --json > ${WORKSPACE}/results/trufflehog_result.json'                            
             }            
-            // post {
-            //     always {                   
-            //         defectDojoPublisher(artifact: '${WORKSPACE}/results/trufflehog_result.json', 
-            //         productName: 'Juice Shop', 
-            //         scanType: 'Trufflehog Scan', 
-            //         engagementName: 'szymon.urbanski@gmail.com')
-            //     }
-            // }
+            post {
+                always {
+                    defectDojoPublisher(artifact: '${WORKSPACE}/results/trufflehog_result.json', 
+                    productName: 'Juice Shop', 
+                    scanType: 'Trufflehog Scan', 
+                    engagementName: 'szymon.urbanski@gmail.com')
+                }
+            }
         }
         // stage('[ZAP] Baseline passive-scan') {
         //     steps {
