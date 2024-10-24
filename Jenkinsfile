@@ -14,13 +14,14 @@ pipeline {
         }   
         stage('[TruffleHog] Filesystem scan') {
             steps {
-                sh' trufflehog git file://. --only-verified'
+                sh 'mkdir -p results/'                
+                sh' trufflehog git file://. --only-verified --json > ${WORKSPACE}/results/trufflehog_result.json'
             }
             // post {
             //     always {                   
-            //         defectDojoPublisher(artifact: '${WORKSPACE}/results/zap_xml_report.xml', 
+            //         defectDojoPublisher(artifact: '${WORKSPACE}/results/trufflehog_result.json', 
             //         productName: 'Juice Shop', 
-            //         scanType: 'ZAP Scan', 
+            //         scanType: 'Trufflehog Scan', 
             //         engagementName: 'szymon.urbanski@gmail.com')
             //     }
             // }
