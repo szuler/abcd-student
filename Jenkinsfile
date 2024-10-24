@@ -17,10 +17,10 @@ pipeline {
                 sh 'mkdir -p results/'                
                 sh 'trufflehog git file://. --only-verified --json > ${WORKSPACE}/results/trufflehog_result.json'
                 sh 'mkdir -p mirror/'
-                dir('mirror') {
-                    sh 'git clone ${WORKSPACE}/ --mirror'
-                    sh 'trufflehog git file://abclab.git --only-verified'// --json > ${WORKSPACE}/results/trufflehog_result.json'
-                }
+            
+                sh 'git clone --mirror . ./mirror'
+                sh 'trufflehog git file://.mirror --only-verified'// --json > ${WORKSPACE}/results/trufflehog_result.json'
+                
             }            
             // post {
             //     always {                   
