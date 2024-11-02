@@ -17,14 +17,14 @@ pipeline {
                 sh 'mkdir -p results/'                                
                 sh 'semgrep --config auto --output results/semgrep_output.json --json'
             }            
-            // post {
-            //     always {
-            //         defectDojoPublisher(artifact: '${WORKSPACE}/results/semgrep_output.json', 
-            //         productName: 'Juice Shop', 
-            //         scanType: 'Semgrep JSON Report', 
-            //         engagementName: 'szymon.urbanski@gmail.com')
-            //     }
-            // }
+            post {
+                always {
+                    defectDojoPublisher(artifact: '${WORKSPACE}/results/semgrep_output.json', 
+                    productName: 'Juice Shop', 
+                    scanType: 'Semgrep JSON Report', 
+                    engagementName: 'szymon.urbanski@gmail.com')
+                }
+            }
         }   
         // stage('[TruffleHog] Filesystem scan') {
         //     steps {
